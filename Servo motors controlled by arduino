@@ -1,0 +1,215 @@
+#include <Servo.h>
+
+
+Servo servo1;  // create servo object for first servo
+
+Servo servo2;  // create servo object for second servo
+
+Servo servo3;
+
+
+
+#define servoPin1 2 // pin for first servo
+
+#define servoPin2 3 // pin for second servo
+
+#define servoPin3 4
+
+
+
+#define pushButtonPin1 8 // push button pin for first servo
+
+#define pushButtonPin2 9 // push button pin for second servo
+
+#define pushButtonPin3 10
+
+
+
+
+
+int angle1 = 90;    // initial angle for first servo
+
+int angle2 = 90;    // initial angle for second servo
+
+int angle3 = 90;
+
+
+int angleStep = 5;  // angle step
+
+
+
+const int minAngle = 0;
+
+const int maxAngle = 180;
+
+
+
+int button1Pushed = 0;
+
+int button2Pushed = 0;
+
+int button3Pushed = 0;
+
+
+
+void setup() {
+
+  Serial.begin(9600);          // setup serial
+
+  servo1.attach(servoPin1);    // attaches the first servo to the servo object
+
+  servo2.attach(servoPin2);    // attaches the second servo to the servo object
+
+  servo3.attach(servoPin3);
+
+  
+
+  pinMode(pushButtonPin1, INPUT_PULLUP); // set push button pin for first servo as input
+
+  pinMode(pushButtonPin2, INPUT_PULLUP); // set push button pin for second servo as input
+
+  pinMode(pushButtonPin3, INPUT_PULLUP);
+
+  
+
+  Serial.println("Tech Technology Pk");
+
+}
+
+
+
+void loop() {
+
+  button1Pushed = 0;
+
+  button2Pushed = 0;
+
+  button3Pushed = 0;
+
+ 
+
+
+
+  // Check if push button for first servo is pressed
+
+  if (digitalRead(pushButtonPin1) == LOW) {
+
+    button1Pushed = 1;
+
+  }
+
+
+
+  // Check if push button for second servo is pressed
+
+  if (digitalRead(pushButtonPin2) == LOW) {
+
+    button2Pushed = 1;
+
+  }
+
+
+
+  if (digitalRead(pushButtonPin3) == LOW) {
+
+    button3Pushed = 1;
+
+  }
+
+
+
+  }
+
+
+
+  
+
+  if (button1Pushed) {
+
+    // change the angle for next time through the loop:
+
+    angle1 += angleStep;
+
+    // reverse the direction of the moving at the ends of the angle:
+
+    if (angle1 <= minAngle || angle1 >= maxAngle) {
+
+      angleStep = -angleStep;
+
+      button1Pushed = 0;
+
+    }
+
+    servo1.write(angle1); // move the first servo to desired angle
+
+    Serial.print("First servo moved to: ");
+
+    Serial.print(angle1);   // print the angle
+
+    Serial.println(" degree");
+
+    delay(50); // waits for the servo to get there
+
+  }
+
+
+
+  // Handle second servo movement
+
+  if (button2Pushed) {
+
+    // change the angle for next time through the loop:
+
+    angle2 += angleStep;
+
+    // reverse the direction of the moving at the ends of the angle:
+
+    if (angle2 <= minAngle || angle2 >= maxAngle) {
+
+      angleStep = -angleStep;
+
+      button2Pushed = 0;
+
+    }
+
+    servo2.write(angle2); // move the second servo to desired angle
+
+    Serial.print("Second servo moved to: ");
+
+    Serial.print(angle2);   // print the angle
+
+    Serial.println(" degree");
+
+    delay(50); // waits for the servo to get there
+
+  }
+
+
+
+  if (button3Pushed) {
+
+    // change the angle for next time through the loop:
+
+    angle3 += angleStep;
+
+    // reverse the direction of the moving at the ends of the angle:
+
+    if (angle3 <= minAngle || angle3 >= maxAngle) {
+
+      angleStep = -angleStep;
+
+      button3Pushed = 0;
+
+    }
+
+    servo3.write(angle3); // move the third servo to desired angle
+
+    Serial.print("Third servo moved to: ");
+
+    Serial.print(angle3);   // print the angle
+
+    Serial.println(" degree");
+
+    delay(50); // waits for the servo to get there
+
+  }
